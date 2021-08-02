@@ -1,22 +1,22 @@
-import { UploadApiResult } from './model/uploadModel';
 import { defHttp } from '/@/utils/http/axios';
-import { UploadFileParams } from '/@/utils/http/axios/types';
-import { useGlobSetting } from '/@/hooks/setting';
-
-const { uploadUrl = '' } = useGlobSetting();
 
 /**
  * @description: Upload interface
  */
-export function uploadApi(
-  params: UploadFileParams,
-  onUploadProgress: (progressEvent: ProgressEvent) => void
-) {
-  return defHttp.uploadFile<UploadApiResult>(
+export function uploadApi(params: any, onUploadProgress: (progressEvent: ProgressEvent) => void) {
+  return defHttp.post(
     {
-      url: uploadUrl,
+      url: '/predict/ocr_system',
       onUploadProgress,
+      params,
     },
-    params
+    { apiUrl: 'http://47.116.71.73:8866' }
   );
+}
+
+export function uploadDogtag(params: any) {
+  return defHttp.post({
+    url: '/images',
+    params,
+  });
 }
